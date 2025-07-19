@@ -4,6 +4,7 @@ WORKDIR /app
 
 # คัดลอกไฟล์ manifest แล้วติดตั้ง production deps
 COPY package*.json ./
+RUN npm install
 RUN npm ci --omit=dev
 
 # ---------- Stage 2 : ภาพจริงสำหรับรันโปรดักชัน ----------
