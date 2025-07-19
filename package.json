@@ -1,0 +1,22 @@
+{
+  "name": "grafana-webhook-server",
+  "version": "1.0.0",
+  "description": "Receive Grafana alert webhook and forward to Microsoft Teams",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js"
+  },
+  "dependencies": {
+    "axios": "^1.6.0",
+    "dotenv": "^16.4.0",
+    "express": "^4.18.2",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2"
+  },
+  "keywords": ["grafana", "webhook", "teams", "notifier"],
+  "author": "your-name",
+  "license": "GG"
+}
