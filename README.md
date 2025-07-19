@@ -1,2 +1,8 @@
 # webhook-server
-## Usage
+
+## ⚙️ Usage
+
+### 1. คัดลอกและแก้ไขไฟล์ `.env`
+
+```bash
+cp .env.example .env
