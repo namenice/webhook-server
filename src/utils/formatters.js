@@ -1,44 +1,35 @@
-function formatFiringAlert(alert) {
-  const name   = alert.labels?.alertname || 'Unnamed Alert';
-  const state  = alert.status?.toUpperCase() || 'UNKNOWN';
-  const instance = alert.labels?.instance || 'unknown instance';
-  const summary = alert.annotations?.summary || 'No summary';
-  const desc   = alert.annotations?.description || 'No description';
-  const url    = alert.generatorURL || '';
+function formatAlert(alert) {
+  const name = alert.labels?.alertname || 'Unknown Alert';
+  const state = alert.status?.toUpperCase() || 'UNKNOWN';
 
-  return (
-    `🔴 **[CRITICAL ALERT] ${name}**  \n` +
-    `🚨 **Status** : Alert  \n` +
-    `🖥️  **Instance** : ${instance}  \n` +
-    `📝 **Summary** : ${summary}  \n` +
-    `📝 **Description** : ${desc}  \n`
-  );
-}
+  const isFiring = alert.status === 'firing';
+  const emoji = {
+    head: isFiring ? '🔴' : '🟢',
+    status: isFiring ? '🚨' : '✅',
+    annotations: isFiring ? '📌' : '🧷',
+    labels: isFiring ? '🔖' : '🪪',
+  };
 
-function formatResolvedAlert(alert) {
-  const name   = alert.labels?.alertname || 'Unnamed Alert';
-  const state  = alert.status?.toUpperCase() || 'UNKNOWN';
-  const instance = alert.labels?.instance || 'unknown instance';
-  const summary = alert.annotations?.summary || 'No summary';
-  const desc   = alert.annotations?.description || 'No description';
+  let msg = `${emoji.head} **[${state}] ${name}**  \n`;
+  msg += `${emoji.status} **Status** : ${state}  \n`;
 
-  return (
-    `🟢 **[RESOLVED] ${name}**  \n` +
-    `✅ **Status** : Ok  \n` +
-    `🖥️  **Instance** : ${instance}  \n` +
-    `📝 **Summary** : ${summary}  \n` +
-    `📝 **Description** : ${desc}`
-  );
+  // Annotations
+  msg += `\n${emoji.annotations} **Annotations**:\n`;
+  Object.entries(alert.annotations || {}).forEach(([key, value]) => {
+    msg += `- ${key} : ${value}  \n`;
+  });
+
+  // Labels
+  msg += `\n${emoji.labels} **Labels**:\n`;
+  Object.entries(alert.labels || {}).forEach(([key, value]) => {
+    msg += `- ${key} : ${value}  \n`;
+  });
+
+  return msg.trim();
 }
 
 function formatOnePlatformMessage(payload) {
-  const messages = payload.alerts.map(alert => {
-    if (alert.status === 'firing') return formatFiringAlert(alert);
-    if (alert.status === 'resolved') return formatResolvedAlert(alert);
-    return `ℹ️ Unknown alert status: ${alert.status}`;
-  });
-
-  return messages.join('\n\n');
+  return payload.alerts.map(formatAlert).join('\n\n');
 }
 
 module.exports = { formatOnePlatformMessage };
