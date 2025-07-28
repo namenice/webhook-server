@@ -16,9 +16,18 @@ function formatAlert(alert) {
   msg += `${emoji.status} **Status** : ${state}  \n`;
 
   // Time
-  const startsAt = new Date(alert.startsAt).toLocaleString('th-TH', { timeZone: 'Asia/Bangkok' });
-  msg += `${emoji.time} **Time** : ${startsAt}  \n`;
+  const formatTime = (isoTime) => {
+    const date = new Date(isoTime);
+    return date.toLocaleString('th-TH', { timeZone: 'Asia/Bangkok' });
+  };
 
+  const startsAt = formatTime(alert.startsAt);
+  let endsAt = 'ยังไม่สิ้นสุด';
+  if (!isFiring && alert.endsAt && alert.endsAt !== '0001-01-01T00:00:00Z') {
+    endsAt = formatTime(alert.endsAt);
+  }
+  msg += `${emoji.time} **StartTime** : ${startsAt}  \n`;
+  msg += `${emoji.time} **EndTime** : ${endsAt}  \n`;
 
   // Annotations
   msg += `\n${emoji.annotations} **Annotations**:\n`;
