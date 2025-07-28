@@ -9,10 +9,15 @@ function formatAlert(alert) {
     status: isFiring ? '🚨' : '✅',
     annotations: isFiring ? '📌' : '🧷',
     labels: isFiring ? '🔖' : '🪪',
+    time: '⏰',
   };
 
   let msg = `<h3>${emoji.head} [${state}] ${name}</h3>`;
   msg += `<p>${emoji.status} <strong>Status</strong>: ${state}</p>`;
+
+  // Time
+  const startsAt = new Date(alert.startsAt).toLocaleString('th-TH', { timeZone: 'Asia/Bangkok' });
+  msg += `<p>${emoji.time} <strong>Time:</strong> ${startsAt}<br>`;
 
   // Annotations
   msg += `<p>${emoji.annotations} <strong>Annotations:</strong><ul>`;
