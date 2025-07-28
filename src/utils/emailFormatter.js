@@ -16,8 +16,18 @@ function formatAlert(alert) {
   msg += `<p>${emoji.status} <strong>Status</strong>: ${state}</p>`;
 
   // Time
-  const startsAt = new Date(alert.startsAt).toLocaleString('th-TH', { timeZone: 'Asia/Bangkok' });
-  msg += `<p>${emoji.time} <strong>Time:</strong> ${startsAt}<br>`;
+  const formatTime = (isoTime) => {
+    const date = new Date(isoTime);
+    return date.toLocaleString('th-TH', { timeZone: 'Asia/Bangkok' });
+  };
+
+  const startsAt = formatTime(alert.startsAt);
+  let endsAt = 'ยังไม่สิ้นสุด';
+  if (!isFiring && alert.endsAt && alert.endsAt !== '0001-01-01T00:00:00Z') {
+    endsAt = formatTime(alert.endsAt);
+  }
+  msg += `<p>${emoji.time} <strong>StartTime:</strong> ${startsAt}<br>`;
+  msg += `<p>${emoji.time} <strong>EndTime:</strong> ${endsAt}<br>`;
 
   // Annotations
   msg += `<p>${emoji.annotations} <strong>Annotations:</strong><ul>`;
