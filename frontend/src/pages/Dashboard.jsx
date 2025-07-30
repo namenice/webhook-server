@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import './Dashboard.css'; // Import the specific CSS for Dashboard
 
 // Helper function to format ISO date strings
 const formatDateTime = (isoString) => {
