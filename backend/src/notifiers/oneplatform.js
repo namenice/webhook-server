@@ -10,7 +10,7 @@ const RECIPIENT_ID = process.env.RECIPIENT_ID;
 
 async function sendToOnePlatform(payload) {
   const message = formatOnePlatformMessage(payload);
-  console.log('✅ Sent to OnePlatform', message);
+//  console.log('✅ Sent to OnePlatform', message);
 
   const requestBody = {
     to: RECIPIENT_ID,
@@ -37,3 +37,4 @@ module.exports = {
   send: sendToOnePlatform,
   name: 'oneplatform'
 };
+

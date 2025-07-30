@@ -1,11 +1,31 @@
-version: "3.9"
+version: '3.8'
 
 services:
-  webhook:
-    build: .
-    container_name: grafana-webhook-server
-    env_file:
-      - .env
+  backend:
+    build:
+      context: ./backend
     ports:
       - "4000:4000"
-    restart: unless-stopped
+    volumes:
+      # เปลี่ยนจาก alert.db เป็น /app/data เพื่อให้ทั้ง directory ถูก mount
+      - alert_db_data:/app/data 
+    env_file:
+      - ./backend/.env
+    environment:
+      - PORT=${PORT:-4000}
+    restart: always
+
+  frontend:
+    build:
+      context: ./frontend
+    ports:
+      - "80:80"
+    environment:
+      - VITE_API_BASE_URL=http://backend:4000
+    depends_on:
+      - backend
+    restart: always
+
+volumes:
+  alert_db_data:
+

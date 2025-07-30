@@ -1,6 +1,5 @@
 // src/notifiers/index.js
 require('dotenv').config();
-
 const emailNoti = require('./email');
 const oneplatformNoti = require('./oneplatform');
 
@@ -25,3 +24,4 @@ module.exports = {
     return results;
   }
 };
+
