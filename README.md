@@ -5,12 +5,12 @@
 ### 1. Copy and Edit File env
 
 ```bash
-cp .env.example .env
-vi .env
+cp backend/.env.example backend/.env
+vi backend/.env
 ```
 ### 2. Run Webhook Server
 ```bash
-docker-compose up -d
+docker-compose up -d --build
 ```
 
 ## ⚙️ Test
