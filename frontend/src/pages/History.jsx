@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { format } from 'date-fns';
 import { enUS } from 'date-fns/locale';
+import './History.css';
 
 // Helper function to format ISO date strings
 const formatDateTime = (isoString) => {
