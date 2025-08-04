@@ -4,28 +4,9 @@ services:
   backend:
     build:
       context: ./backend
+    container_name: backend-webhook
     ports:
-      - "4000:4000"
-    volumes:
-      # เปลี่ยนจาก alert.db เป็น /app/data เพื่อให้ทั้ง directory ถูก mount
-      - alert_db_data:/app/data 
+      - 4000:4000
     env_file:
       - ./backend/.env
-    environment:
-      - PORT=${PORT:-4000}
-    restart: always
-
-  frontend:
-    build:
-      context: ./frontend
-    ports:
-      - "80:80"
-    environment:
-      - VITE_API_BASE_URL=http://backend:4000
-    depends_on:
-      - backend
-    restart: always
-
-volumes:
-  alert_db_data:
-
+    restart: unless-stopped

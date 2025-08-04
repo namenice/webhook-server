@@ -5,7 +5,6 @@ const morgan   = require('morgan');
 const cors = require('cors');
 
 const webhookGrafanaRoute = require('./routes/webhookGrafana');
-const alertHistoryRoute = require('./routes/alertHistory');
 
 const app = express();
 
@@ -19,12 +18,6 @@ app.get('/health', (_, res) => res.send('ok'));
 
 // Webhook
 app.use('/webhook/grafana', webhookGrafanaRoute);
-
-// API Get Alert
-app.use('/api/alerts/history', alertHistoryRoute);
-
-
-
 
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, '0.0.0.0', () => console.log(`Webhook server listening on :${PORT}`));

@@ -22,7 +22,7 @@ function formatAlert(alert) {
   };
 
   const startsAt = formatTime(alert.startsAt);
-  let endsAt = 'ยังไม่สิ้นสุด';
+  let endsAt = 'กำลังดำเนินการแก้ไข';
   if (!isFiring && alert.endsAt && alert.endsAt !== '0001-01-01T00:00:00Z') {
     endsAt = formatTime(alert.endsAt);
   }
