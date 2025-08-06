@@ -24,7 +24,7 @@ async function send(payload) {
   const mailOptions = {
     from: `"Alert Bot" <${process.env.MAIL_USER}>`,
     to: process.env.MAIL_TO,
-    subject: '⚠️[Alert] Critical from Openlandscape Cloud⚠️',
+    subject: '⚠️[Alert] Critical Infra From Openlandscape Cloud⚠️',
     html: message
   };
 
