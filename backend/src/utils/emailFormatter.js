@@ -2,14 +2,14 @@
 function formatAlert(alert) {
     const name = alert.labels?.alertname || 'Unknown Alert';
     const state = alert.status?.toUpperCase() || 'UNKNOWN';
-    const priority = alert.labels.priority?.toUpperCase() || 'UNKNOWN'; 
+    const priority = alert.labels.priority?.toUpperCase() || 'UNKNOWN';
     const isFiring = alert.status === 'firing';
     const emoji = {
         head: isFiring ? '🔴' : '🟢',
         annotations: '📌',
         labels: '🔖',
         time: '⏰',
-        priority: '🚩', 
+        priority: '🚩',
     };
     let displayState = state;
     if (isFiring) {
@@ -24,7 +24,7 @@ function formatAlert(alert) {
             </h3>
             <p style="margin-bottom: 5px;"><strong>สถานะ:</strong> <span style="font-weight: bold; color: ${isFiring ? '#cc0000' : '#008000'};">${displayState}</span></p>
     `;
-    msg += `<p style="margin-bottom: 5px;">${emoji.priority} <strong>priority:</strong><span style="background-color: #ffff00; padding: 2px;"> ${priority}</span></p>`; 
+    msg += `<p style="margin-bottom: 5px;">${emoji.priority} <strong>Priority:</strong><span style="background-color: #ffff00; padding: 2px;"> ${priority}</span></p>`;
     const formatTime = (isoTime) => {
         const date = new Date(isoTime);
         return date.toLocaleString('th-TH', {
@@ -34,7 +34,7 @@ function formatAlert(alert) {
             hour: '2-digit',
             minute: '2-digit',
             second: '2-digit',
-            hour12: false, 
+            hour12: false,
             timeZone: 'Asia/Bangkok'
         });
     };
@@ -70,8 +70,19 @@ function formatEmailMessage(payload) {
     }
     const allAlerts = [...firingAlerts, ...resolvedAlerts];
     const alertCount = allAlerts.length;
-    const note = `<p><strong>📣 หมายเหตุ:</strong> <span style="background-color: #ffff00; padding: 2px;">รบกวนเปิดเคสแจ้งทีม Openlandscape Cloud ตรวจสอบครับ</span> (จำนวนการแจ้งเตือนทั้งหมด ${alertCount} รายการ >> <span style="color: #cc0000; font-weight: bold;">Firing : ${firingAlerts.length}</span> , <span style="color: #008000; font-weight: bold;">Resolved : ${resolvedAlerts.length}</span>)</p><hr style="margin:20px 0;">`;
+    const note = `
+        <p>
+            <strong>📣 หมายเหตุ:</strong>
+            <span style="background-color: #ffff00; padding: 2px;">รบกวนเปิดเคสแจ้งทีม Openlandscape Cloud ตรวจสอบครับ</span>
+            (จำนวนการแจ้งเตือนทั้งหมด ${alertCount} รายการ >>
+            <span style="color: #cc0000; font-weight: bold;">Firing : ${firingAlerts.length}</span> ,
+            <span style="color: #008000; font-weight: bold;">Resolved : ${resolvedAlerts.length}</span>)
+        </p>
+        <hr style="margin:20px 0;">
+    `;
     const alertsHtml = allAlerts.map(formatAlert).join('<hr style="margin:20px 0;">');
+
     return note + alertsHtml;
+
 }
 module.exports = { formatEmailMessage };
