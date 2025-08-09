@@ -2,12 +2,14 @@
 function formatAlert(alert) {
     const name = alert.labels?.alertname || 'Unknown Alert';
     const state = alert.status?.toUpperCase() || 'UNKNOWN';
+    const priority = alert.labels.priority?.toUpperCase() || 'UNKNOWN'; 
     const isFiring = alert.status === 'firing';
     const emoji = {
         head: isFiring ? '🔴' : '🟢',
         annotations: '📌',
         labels: '🔖',
         time: '⏰',
+        priority: '🚩', 
     };
     let displayState = state;
     if (isFiring) {
@@ -22,6 +24,7 @@ function formatAlert(alert) {
             </h3>
             <p style="margin-bottom: 5px;"><strong>สถานะ:</strong> <span style="font-weight: bold; color: ${isFiring ? '#cc0000' : '#008000'};">${displayState}</span></p>
     `;
+    msg += `<p style="margin-bottom: 5px;">${emoji.priority} <strong>priority:</strong><span style="background-color: #ffff00; padding: 2px;"> ${priority}</span></p>`; 
     const formatTime = (isoTime) => {
         const date = new Date(isoTime);
         return date.toLocaleString('th-TH', {
