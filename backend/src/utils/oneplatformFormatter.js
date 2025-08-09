@@ -18,7 +18,6 @@ function formatAlert(alert) {
     const isFiring = alert.status === 'firing';
     const emoji = {
         head: isFiring ? '🔴' : '🟢',
-        status: isFiring ? '🚨' : '✅',
         annotations: isFiring ? '📌' : '✅',
         labels: isFiring ? '🔖' : '✅',
         time: '⏰',
