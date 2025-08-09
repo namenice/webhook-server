@@ -7,8 +7,8 @@ function formatAlert(alert) {
 
     const emoji = {
         head: isFiring ? '🔴' : '🟢',
-        annotations: '📌',
-        labels: '🔖',
+        annotations: isFiring ? '📌' : '✅',
+        labels: isFiring ? '🔖' : '✅',
         time: '⏰',
         priority: '🚩',
     };
